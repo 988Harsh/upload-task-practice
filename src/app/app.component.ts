@@ -54,7 +54,9 @@ export class AppComponent {
           let a = document.createElement('a');
           a.href = fileURL;
           a.target = '_blank';
+          document.body.appendChild(a);
           a.click();
+          a.remove();
         })
     });
 
