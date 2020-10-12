@@ -40,6 +40,7 @@ export class AppComponent {
 
 
   openFile(i) {
+    const IosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K', 'iPhone', 'iPad', 'iPod'];
     const fileInfo = {
       name: this.files[i].name,
       size: this.files[i].size,
@@ -54,9 +55,19 @@ export class AppComponent {
           let a = document.createElement('a');
           a.href = fileURL;
           a.target = '_blank';
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
+          if (IosPlatforms.includes(window.navigator.platform)) {
+            a.addEventListener('onclick', () => {
+              const newWin = window.open();
+              newWin.location.assign(fileURL);
+            });
+            a.dispatchEvent(new MouseEvent('click'));
+            a.remove();
+          } else {
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          }
+
         })
     });
 
