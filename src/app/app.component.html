@@ -8,9 +8,11 @@
     </div>
     <div class="list-of-files m-auto ">
       <p *ngIf="files.length===0" style="opacity: 0.5;">Files uploaded will be shown here</p>
-      <ul class="p-1" style="list-style-type: none;" *ngFor="let file of files; let i = index" [attr.data-index]="i">
-        <li value="file" (click)="openFile(i)">
-          <button class="col-12 file-list-button">{{file.name}}</button>
+      <ul #mylist class="p-1" style="list-style-type: none;" *ngFor="let file of files; let i = index; trackBy: file"
+        [attr.data-index]="i">
+        <li>
+          <button class="file-list-button" (click)="openFile(i)">{{file.name}}</button>
+          <button class="text-center" (click)="removeFile(i)"><i class="fa fa-trash" aria-hidden="true"></i></button>
         </li>
       </ul>
     </div>

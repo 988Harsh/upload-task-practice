@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +8,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 export class AppComponent {
   title = 'file-upload-task-practice';
 
-  @ViewChild("fileDropRef", { static: false }) fileDropEl: ElementRef;
   files = [];
-  dataUrl = [];
-  recentFiles = [];
+  dataUrl;
   addDropZone($event) {
     $event.currentTarget.classList.add('hovered');
   }
@@ -21,40 +19,46 @@ export class AppComponent {
   }
 
   fileDropped($event) {
-    let currentFiles = [];
     for (const file of $event) {
       this.files.push(file);
-      currentFiles.push(file);
     }
-    currentFiles.forEach(file => {
-      const fileInfo = {
-        name: file.name,
-        size: file.size,
-        type: file.type
-      };
-      this.readFile(file, fileInfo);
-    });
   }
 
-  readFile(file, fileInfo) {
+  readFile(file, fileInfo, callback) {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      fileInfo.content = reader.result;
-      this.dataUrl.push(fileInfo);
+    reader.onload = (e) => {
+      fileInfo.content = e.target['result'];
+      this.dataUrl = fileInfo;
+      callback();
     };
+    reader.readAsDataURL(file);
   }
 
+  removeFile(i) {
+    this.files.splice(i, 1);
+  }
 
 
   openFile(i) {
-    fetch(this.dataUrl[i].content)
-      .then((res) => { return res.arrayBuffer(); })
-      .then((buf) => { return new File([buf], this.dataUrl[i].name, { type: this.dataUrl[i].type }); })
-      .then(data => {
-        const fileURL = URL.createObjectURL(data);
-        window.open(fileURL);
-      })
+    const fileInfo = {
+      name: this.files[i].name,
+      size: this.files[i].size,
+      type: this.files[i].type
+    };
+    this.readFile(this.files[i], fileInfo, () => {
+      fetch(this.dataUrl.content)
+        .then((res) => { return res.arrayBuffer(); })
+        .then((buf) => { return new File([buf], this.dataUrl.name, { type: this.dataUrl.type }); })
+        .then(data => {
+          const fileURL = URL.createObjectURL(data);
+          let a = document.createElement('a');
+          a.href = fileURL;
+          a.target = '_blank';
+          a.click();
+        })
+    });
+
+
   }
 
 }
