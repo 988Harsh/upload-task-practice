@@ -39,7 +39,6 @@ exports.config = {
     });
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
 
-
     protractor.By.addLocator('custom', function (value) {
       return document.querySelectorAll('[custom-' + value + ']');
     })
