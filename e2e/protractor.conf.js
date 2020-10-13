@@ -44,6 +44,5 @@ exports.config = {
       return document.querySelectorAll('[custom-' + value + ']');
     })
 
-
   }
 };

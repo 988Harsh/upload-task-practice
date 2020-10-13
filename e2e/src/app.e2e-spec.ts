@@ -38,6 +38,7 @@ describe('upload App', () => {
         browser.switchTo().window(newWindowHandle).then(function () {
           browser.getCurrentUrl().then(url => {
             expect(url).toMatch(/blob:/);
+            browser.ignoreSynchronization = false;
           });
         });
         browser.switchTo().window(handles[0]);
@@ -75,6 +76,7 @@ describe('upload App', () => {
           browser.sleep(1000);
           browser.getCurrentUrl().then(url => {
             expect(url).toMatch(/blob:/);
+            browser.ignoreSynchronization = false;
           });
         });
         browser.switchTo().window(handles[0]);
