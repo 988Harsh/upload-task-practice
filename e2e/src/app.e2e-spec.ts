@@ -16,21 +16,21 @@ describe('upload App', () => {
     page.navigateTo();
     browser.waitForAngular();
     browser.sleep(1000);
-    expect(element(by.css('.no-files')).isDisplayed()).toBe(true);
-    element(by.css('.file')).sendKeys(pngFilePath);
-    expect(element(by.css('.no-files')).isPresent()).toBe(false);
+    expect(element(by.custom('no-files')).isDisplayed()).toBe(true);
+    element(by.custom('file')).sendKeys(pngFilePath);
+    expect(element(by.custom('no-files')).isPresent()).toBe(false);
   });
 
   it('should display a file in file list', () => {
     browser.waitForAngular();
     browser.sleep(1000);
-    expect(element(by.css('.file-list')).isDisplayed()).toBe(true);
+    expect(element(by.custom('file-list')).isDisplayed()).toBe(true);
   });
 
   it('should be able to open a file', () => {
     browser.waitForAngular();
     browser.sleep(1000);
-    element(by.css('.file-list-button')).click().then(() => {
+    element(by.custom('file-list-button')).click().then(() => {
       browser.waitForAngular();
       browser.getAllWindowHandles().then(function (handles) {
         let newWindowHandle = handles[1]; // this is your new window
@@ -49,24 +49,24 @@ describe('upload App', () => {
   it('should be able to delete file', () => {
     browser.waitForAngular();
     browser.sleep(1000);
-    expect(element(by.css('.no-files')).isPresent()).toBe(false);
-    element(by.css('.remove')).click();
-    expect(element(by.css('.no-files')).isDisplayed()).toBe(true);
+    expect(element(by.custom('no-files')).isPresent()).toBe(false);
+    element(by.custom('remove')).click();
+    expect(element(by.custom('no-files')).isDisplayed()).toBe(true);
   });
 
   it('should be able to upload a mp4 file', () => {
     browser.refresh();
     browser.waitForAngular();
     browser.sleep(1000);
-    expect(element(by.css('.no-files')).isDisplayed()).toBe(true);
-    element(by.css('.file')).sendKeys(mp4FilePath);
-    expect(element(by.css('.no-files')).isPresent()).toBe(false);
+    expect(element(by.custom('no-files')).isDisplayed()).toBe(true);
+    element(by.custom('file')).sendKeys(mp4FilePath);
+    expect(element(by.custom('no-files')).isPresent()).toBe(false);
   });
 
   it('should be able to open a mp4 file', () => {
     browser.waitForAngular();
     browser.sleep(1000);
-    element(by.css('.file-list-button')).click().then(() => {
+    element(by.custom('file-list-button')).click().then(() => {
       browser.waitForAngular();
       browser.getAllWindowHandles().then(function (handles) {
         let newWindowHandle = handles[1]; // this is your new window
