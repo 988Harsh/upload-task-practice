@@ -9,7 +9,7 @@ getChromeDriver = function () {
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 
 const { SpecReporter } = require('jasmine-spec-reporter');
-const { protractor } = require('protractor/built/ptor');
+// const { protractor } = require('protractor/built/ptor');
 
 
 /**
@@ -38,7 +38,7 @@ exports.config = {
     });
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
 
-    protractor.by.addLocator('custom', function (value) {
+    By.addLocator('custom', function (value) {
       return document.querySelectorAll('[custom-' + value + ']');
     })
 
