@@ -1,16 +1,56 @@
 import { AppPage } from './app.po';
-import { browser, logging } from 'protractor';
+import { browser, by, element, logging } from 'protractor';
+const path = require('path');
 
-describe('workspace-project App', () => {
+describe('upload App', () => {
   let page: AppPage;
+  let pngFilePath = path.resolve(__dirname, '../docs/battery.png');
 
   beforeEach(() => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+
+  it('should be able to upload a png file', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('file-upload-task-practice app is running!');
+    browser.waitForAngular();
+    browser.sleep(1000);
+    expect(element(by.css('.no-files')).isDisplayed()).toBe(true);
+    element(by.css('.file')).sendKeys(pngFilePath);
+    expect(element(by.css('.no-files')).isPresent()).toBe(false);
+  });
+
+  it('should display a file in file list', () => {
+    browser.waitForAngular();
+    browser.sleep(1000);
+    expect(element(by.css('.file-list')).isDisplayed()).toBe(true);
+  });
+
+  it('should be able to open a file', () => {
+    browser.waitForAngular();
+    browser.sleep(1000);
+    element(by.css('.file-list-button')).click().then(() => {
+      browser.waitForAngular();
+      browser.getAllWindowHandles().then(function (handles) {
+        let newWindowHandle = handles[1]; // this is your new window
+        browser.ignoreSynchronization = true;
+        browser.switchTo().window(newWindowHandle).then(function () {
+          browser.getCurrentUrl().then(url => {
+            expect(url).toMatch(/blob:/);
+          });
+        });
+        browser.switchTo().window(handles[0]);
+        browser.sleep(1000);
+      });
+    });
+  });
+
+  it('should be able to delete file', () => {
+    browser.waitForAngular();
+    browser.sleep(1000);
+    expect(element(by.css('.no-files')).isPresent()).toBe(false);
+    element(by.css('.remove')).click();
+    expect(element(by.css('.no-files')).isDisplayed()).toBe(true);
   });
 
   afterEach(async () => {

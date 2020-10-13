@@ -7,12 +7,13 @@
       <p class="upload-text">Click here to upload Files.</p>
     </div>
     <div class="list-of-files m-auto ">
-      <p *ngIf="files.length===0" style="opacity: 0.5;">Files uploaded will be shown here</p>
+      <p class="no-files" *ngIf="files.length===0" style="opacity: 0.5;">Files uploaded will be shown here</p>
       <ul #mylist class="p-1" style="list-style-type: none;" *ngFor="let file of files; let i = index; trackBy: file"
         [attr.data-index]="i">
-        <li>
+        <li class="file-list">
           <button class="file-list-button" (click)="openFile(i)">{{file.name}}</button>
-          <button class="text-center" (click)="removeFile(i)"><i class="fa fa-trash" aria-hidden="true"></i></button>
+          <button class="text-center remove" (click)="removeFile(i)"><i class="fa fa-trash"
+              aria-hidden="true"></i></button>
         </li>
       </ul>
     </div>
