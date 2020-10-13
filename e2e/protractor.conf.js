@@ -1,5 +1,8 @@
 getChromeDriver = function () {
-  return '../node_modules/chromedriver/lib/chromedriver/chromedriver.exe';
+  if (/^win/.test(process.platform)) {
+    return '../node_modules/chromedriver/lib/chromedriver/chromedriver.exe';
+  }
+  return '../node_modules/chromedriver/lib/chromedriver/chromedriver';
 }
 // @ts-check
 // Protractor configuration file, see link for more information
@@ -13,7 +16,6 @@ const { SpecReporter } = require('jasmine-spec-reporter');
  * @type { import("protractor").Config }
  */
 exports.config = {
-
   chromeDriver: getChromeDriver(),
   allScriptsTimeout: 11000,
   specs: [
