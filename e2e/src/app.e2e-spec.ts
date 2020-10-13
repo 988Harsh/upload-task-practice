@@ -63,7 +63,7 @@ describe('upload App', () => {
     browser.sleep(1000);
   });
 
-  it('should be able to open a mp4 file', () => {
+  it('should be able to open any of the multiple files', () => {
     utils.waitForChanges();
     utils.openAllFiles();
 

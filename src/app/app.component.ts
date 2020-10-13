@@ -9,6 +9,7 @@ export class AppComponent {
   title = 'file-upload-task-practice';
 
   files = [];
+  isBeingUploaded = false;
   dataUrl;
   addDropZone($event) {
     $event.currentTarget.classList.add('hovered');
@@ -18,10 +19,16 @@ export class AppComponent {
     $event.currentTarget.classList.remove('hovered');
   }
 
+  addFileTask(file) {
+    this.files.push(file);
+  }
+
   fileDropped($event) {
+    this.isBeingUploaded = true;
     for (const file of $event) {
-      this.files.push(file);
+      this.addFileTask(file);
     }
+    this.isBeingUploaded = true;
   }
 
   readFile(file, fileInfo, callback) {
