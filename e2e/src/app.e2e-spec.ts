@@ -66,7 +66,6 @@ describe('upload App', () => {
   it('should be able to open any of the multiple files', () => {
     utils.waitForChanges();
     utils.openAllFiles();
-
   });
 
   afterEach(async () => {

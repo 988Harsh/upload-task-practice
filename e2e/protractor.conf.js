@@ -12,7 +12,6 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 const { protractor } = require('protractor/built/ptor');
 
 
-
 /**
  * @type { import("protractor").Config }
  */
