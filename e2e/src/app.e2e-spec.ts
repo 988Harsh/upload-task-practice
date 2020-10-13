@@ -1,59 +1,40 @@
 import { AppPage } from './app.po';
 import { browser, by, element, logging } from 'protractor';
+import { Utils } from '../utils';
 const path = require('path');
 
 describe('upload App', () => {
   let page: AppPage;
+  let utils: Utils;
   let pngFilePath = path.resolve(__dirname, '../docs/battery.png');
   let mp4FilePath = path.resolve(__dirname, '../docs/file_example_MP4_480_1_5MG.mp4');
 
   beforeEach(() => {
+    utils = new Utils();
     page = new AppPage();
   });
 
 
   it('should be able to upload a png file', () => {
     page.navigateTo();
-    browser.waitForAngular();
-    browser.sleep(1000);
-
+    utils.waitForChanges();
     expect(element(by.custom('no-files')).isDisplayed()).toBe(true);
     element(by.custom('file')).sendKeys(pngFilePath);
     expect(element(by.custom('no-files')).isPresent()).toBe(false);
   });
 
   it('should display a file in file list', () => {
-    browser.waitForAngular();
-    browser.sleep(1000);
-
+    utils.waitForChanges();
     expect(element(by.custom('file-list')).isDisplayed()).toBe(true);
   });
 
   it('should be able to open a file', () => {
-    browser.waitForAngular();
-    browser.sleep(1000);
-
-    element(by.custom('file-list-button')).click().then(() => {
-      browser.waitForAngular();
-      browser.getAllWindowHandles().then(function (handles) {
-        let newWindowHandle = handles[1]; // this is your new window
-        browser.ignoreSynchronization = true;
-        browser.switchTo().window(newWindowHandle).then(function () {
-          browser.getCurrentUrl().then(url => {
-            expect(url).toMatch(/blob:/);
-            browser.ignoreSynchronization = false;
-          });
-        });
-        browser.switchTo().window(handles[0]);
-        browser.sleep(1000);
-      });
-    });
+    utils.waitForChanges();
+    utils.openAllFiles();
   });
 
   it('should be able to delete file', () => {
-    browser.waitForAngular();
-    browser.sleep(1000);
-
+    utils.waitForChanges();
     expect(element(by.custom('no-files')).isPresent()).toBe(false);
     element(by.custom('remove')).click();
     expect(element(by.custom('no-files')).isDisplayed()).toBe(true);
@@ -61,9 +42,7 @@ describe('upload App', () => {
 
   it('should be able to upload a mp4 file', () => {
     browser.refresh();
-    browser.waitForAngular();
-    browser.sleep(1000);
-
+    utils.waitForChanges();
     expect(element(by.custom('no-files')).isDisplayed()).toBe(true);
     element(by.custom('file')).sendKeys(mp4FilePath);
     expect(element(by.custom('no-files')).isPresent()).toBe(false);
@@ -71,25 +50,23 @@ describe('upload App', () => {
   });
 
   it('should be able to open a mp4 file', () => {
-    browser.waitForAngular();
-    browser.sleep(1000);
+    utils.waitForChanges();
+    utils.openAllFiles();
+  });
 
-    element(by.custom('file-list-button')).click().then(() => {
-      browser.waitForAngular();
-      browser.getAllWindowHandles().then(function (handles) {
-        let newWindowHandle = handles[1]; // this is your new window
-        browser.ignoreSynchronization = true;
-        browser.switchTo().window(newWindowHandle).then(function () {
-          browser.sleep(1000);
-          browser.getCurrentUrl().then(url => {
-            expect(url).toMatch(/blob:/);
-            browser.ignoreSynchronization = false;
-          });
-        });
-        browser.switchTo().window(handles[0]);
-        browser.sleep(1000);
-      });
-    });
+  it('should acept multiple files at once', () => {
+    browser.refresh();
+    utils.waitForChanges();
+    expect(element(by.custom('no-files')).isDisplayed()).toBe(true);
+    element(by.custom('file')).sendKeys(mp4FilePath + '\n' + pngFilePath);
+    expect(element(by.custom('no-files')).isPresent()).toBe(false);
+    browser.sleep(1000);
+  });
+
+  it('should be able to open a mp4 file', () => {
+    utils.waitForChanges();
+    utils.openAllFiles();
+
   });
 
   afterEach(async () => {
