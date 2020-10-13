@@ -5,6 +5,7 @@ const path = require('path');
 describe('upload App', () => {
   let page: AppPage;
   let pngFilePath = path.resolve(__dirname, '../docs/battery.png');
+  let mp4FilePath = path.resolve(__dirname, '../docs/file_example_MP4_480_1_5MG.mp4');
 
   beforeEach(() => {
     page = new AppPage();
@@ -51,6 +52,35 @@ describe('upload App', () => {
     expect(element(by.css('.no-files')).isPresent()).toBe(false);
     element(by.css('.remove')).click();
     expect(element(by.css('.no-files')).isDisplayed()).toBe(true);
+  });
+
+  it('should be able to upload a mp4 file', () => {
+    browser.refresh();
+    browser.waitForAngular();
+    browser.sleep(1000);
+    expect(element(by.css('.no-files')).isDisplayed()).toBe(true);
+    element(by.css('.file')).sendKeys(mp4FilePath);
+    expect(element(by.css('.no-files')).isPresent()).toBe(false);
+  });
+
+  it('should be able to open a mp4 file', () => {
+    browser.waitForAngular();
+    browser.sleep(1000);
+    element(by.css('.file-list-button')).click().then(() => {
+      browser.waitForAngular();
+      browser.getAllWindowHandles().then(function (handles) {
+        let newWindowHandle = handles[1]; // this is your new window
+        browser.ignoreSynchronization = true;
+        browser.switchTo().window(newWindowHandle).then(function () {
+          browser.sleep(1000);
+          browser.getCurrentUrl().then(url => {
+            expect(url).toMatch(/blob:/);
+          });
+        });
+        browser.switchTo().window(handles[0]);
+        browser.sleep(1000);
+      });
+    });
   });
 
   afterEach(async () => {
