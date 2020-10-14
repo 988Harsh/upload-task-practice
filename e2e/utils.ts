@@ -11,21 +11,20 @@ export class Utils {
         element.all(by.custom('file-list-button')).each(button => {
             button.click().then(() => {
                 this.waitForChanges();
-                browser.getAllWindowHandles().then(function (handles) {
-                    let newWindowHandle = handles[1]; // this is your new window
+                browser.getAllWindowHandles().then(handles => {
+                    const newWindowHandle = handles[1]; // this is your new window
                     browser.ignoreSynchronization = true;
-                    browser.switchTo().window(newWindowHandle).then(function () {
+                    browser.switchTo().window(newWindowHandle).then(() => {
                         browser.getCurrentUrl().then(url => {
                             expect(url).toMatch(/blob:/);
                             browser.ignoreSynchronization = false;
+                            browser.close();
+                            browser.switchTo().window(handles[0]);
+                            browser.sleep(1000);
                         });
                     });
-                    browser.switchTo().window(handles[0]);
-                    browser.sleep(1000);
                 });
             });
         });
-
     }
-
 }

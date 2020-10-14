@@ -9,7 +9,6 @@ export class AppComponent {
   title = 'file-upload-task-practice';
 
   files = [];
-  isBeingUploaded = false;
   dataUrl;
   addDropZone($event) {
     $event.currentTarget.classList.add('hovered');
@@ -19,25 +18,16 @@ export class AppComponent {
     $event.currentTarget.classList.remove('hovered');
   }
 
-  addFileTask(file) {
-    this.files.push(file);
-    console.log("done ", file);
-  }
-
   fileDropped($event) {
-    this.isBeingUploaded = true;
     for (const file of $event) {
-      setTimeout(() => {
-        this.addFileTask(file);
-      }, 1);
+      this.files.push(file);
     }
-    this.isBeingUploaded = false;
   }
 
   readFile(file, fileInfo, callback) {
     const reader = new FileReader();
-    reader.onload = (e) => {
-      fileInfo.content = e.target['result'];
+    reader.onload = () => {
+      fileInfo.content = reader.result;
       this.dataUrl = fileInfo;
       callback();
     };
@@ -58,11 +48,11 @@ export class AppComponent {
     };
     this.readFile(this.files[i], fileInfo, () => {
       fetch(this.dataUrl.content)
-        .then((res) => { return res.arrayBuffer(); })
-        .then((buf) => { return new File([buf], this.dataUrl.name, { type: this.dataUrl.type }); })
+        .then((res) => res.arrayBuffer())
+        .then((buf) => new File([buf], this.dataUrl.name, { type: this.dataUrl.type }))
         .then(data => {
           const fileURL = URL.createObjectURL(data);
-          let a = document.createElement('a');
+          const a = document.createElement('a');
           a.href = fileURL;
           a.target = '_blank';
           if (IosPlatforms.includes(window.navigator.platform)) {
@@ -77,7 +67,7 @@ export class AppComponent {
             a.click();
             a.remove();
           }
-        })
+        });
     });
   }
 
