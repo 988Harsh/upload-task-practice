@@ -13,11 +13,11 @@ export class Utils {
                 this.waitForChanges();
                 browser.getAllWindowHandles().then(handles => {
                     const newWindowHandle = handles[1]; // this is your new window
-                    browser.ignoreSynchronization = true;
+                    browser.waitForAngularEnabled(false);
                     browser.switchTo().window(newWindowHandle).then(() => {
                         browser.getCurrentUrl().then(url => {
                             expect(url).toMatch(/blob:/);
-                            browser.ignoreSynchronization = false;
+                            browser.waitForAngularEnabled(true);
                             browser.close();
                             browser.switchTo().window(handles[0]);
                             browser.sleep(1000);
