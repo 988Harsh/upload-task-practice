@@ -7,7 +7,7 @@ const path = require('path');
 describe('upload App', () => {
   let page: AppPage;
   let utils: Utils;
-  let pngFilePath = path.resolve(__dirname, '../docs/battery.png');
+  let pngFilePath = path.resolve(__dirname, '../docs/battery.PNG');
   let mp4FilePath = path.resolve(__dirname, '../docs/file_example_MP4_480_1_5MG.mp4');
 
   beforeEach(() => {
