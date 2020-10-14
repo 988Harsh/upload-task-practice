@@ -21,14 +21,17 @@ export class AppComponent {
 
   addFileTask(file) {
     this.files.push(file);
+    console.log("done ", file);
   }
 
   fileDropped($event) {
     this.isBeingUploaded = true;
     for (const file of $event) {
-      this.addFileTask(file);
+      setTimeout(() => {
+        this.addFileTask(file);
+      }, 1);
     }
-    this.isBeingUploaded = true;
+    this.isBeingUploaded = false;
   }
 
   readFile(file, fileInfo, callback) {
@@ -74,11 +77,8 @@ export class AppComponent {
             a.click();
             a.remove();
           }
-
         })
     });
-
-
   }
 
 }

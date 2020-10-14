@@ -1,6 +1,7 @@
 import { AppPage } from './app.po';
 import { browser, by, element, logging } from 'protractor';
 import { Utils } from '../utils';
+import { removeListener } from 'process';
 const path = require('path');
 
 describe('upload App', () => {
@@ -15,11 +16,11 @@ describe('upload App', () => {
   });
 
 
-  it('should be able to upload a png file', () => {
+  it('should be able to upload a png file', async () => {
     page.navigateTo();
     utils.waitForChanges();
     expect(element(by.custom('no-files')).isDisplayed()).toBe(true);
-    element(by.custom('file')).sendKeys(pngFilePath);
+    await element(by.custom('file')).sendKeys(pngFilePath);
     expect(element(by.custom('no-files')).isPresent()).toBe(false);
   });
 
@@ -40,11 +41,11 @@ describe('upload App', () => {
     expect(element(by.custom('no-files')).isDisplayed()).toBe(true);
   });
 
-  it('should be able to upload a mp4 file', () => {
+  it('should be able to upload a mp4 file', async () => {
     browser.refresh();
     utils.waitForChanges();
     expect(element(by.custom('no-files')).isDisplayed()).toBe(true);
-    element(by.custom('file')).sendKeys(mp4FilePath);
+    await element(by.custom('file')).sendKeys(mp4FilePath);
     expect(element(by.custom('no-files')).isPresent()).toBe(false);
 
   });
@@ -54,11 +55,11 @@ describe('upload App', () => {
     utils.openAllFiles();
   });
 
-  it('should acept multiple files at once', () => {
+  it('should accept multiple files at once', async () => {
     browser.refresh();
     utils.waitForChanges();
     expect(element(by.custom('no-files')).isDisplayed()).toBe(true);
-    element(by.custom('file')).sendKeys(mp4FilePath + '\n' + pngFilePath);
+    await element(by.custom('file')).sendKeys(mp4FilePath + '\n' + pngFilePath);
     expect(element(by.custom('no-files')).isPresent()).toBe(false);
     browser.sleep(1000);
   });
