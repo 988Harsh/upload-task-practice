@@ -1,18 +1,18 @@
 <div class="container fluid justify-content-center text-center page">
   <div class="row h-100">
-    <div class="upload-area my-auto" (dragenter)="addDropZone($event)" (dragleave)="removeDropZone($event)"
+    <div class="upload-area box-size-1 my-auto" (dragenter)="addDropZone($event)" (dragleave)="removeDropZone($event)"
       (drop)="removeDropZone($event)">
-      <input custom-file class="file" type="file" name="files" id="files" (change)="fileDropped($event.target.files)"
-        multiple="true">
+      <input custom-file class="stretch-child" type="file" name="files" id="files"
+        (change)="fileDropped($event.target.files)" multiple="true">
       <p class="upload-text">Click here to upload Files.</p>
     </div>
-    <div class="list-of-files m-auto ">
+    <div class="box-size-2 m-auto ">
       <p custom-no-files class="no-files" *ngIf="files.length===0" style="opacity: 0.5;">Files uploaded will be shown
         here</p>
       <ul #mylist class="p-1" style="list-style-type: none;" *ngFor="let file of files; let i = index; trackBy: file"
         [attr.data-index]="i">
         <li custom-file-list>
-          <button custom-file-list-button class=" col-10 file-list-button" (click)="openFile(i)">{{file.name}}</button>
+          <button custom-file-list-button class=" col-10 button-in-list" (click)="openFile(i)">{{file.name}}</button>
           <button custom-remove class="col-1 text-center" (click)="removeFile(i)"><i class="fa fa-trash"
               aria-hidden="true"></i></button>
         </li>
