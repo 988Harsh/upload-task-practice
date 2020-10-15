@@ -1,78 +1,78 @@
-@import "~bootstrap/dist/css/bootstrap.css";
+@import "../common-styles/common-styles.scss";
 
-.page{
-    height: 100vh;
-}
+// .page{
+//     height: 100vh;
+// }
 
-.upload-area{
-    box-sizing: border-box;
-    border: 2px lightblue solid;
-    border-radius: 10px;
-    height: 25rem;
-    width: 30rem;
-    margin: auto;
-    background-color: beige;
-    padding: 0;
-    text-align: center;
-    position: relative;
-}
+// .upload-area{
+//     box-sizing: border-box;
+//     border: 2px lightblue solid;
+//     border-radius: 10px;
+//     height: 25rem;
+//     width: 30rem;
+//     margin: auto;
+//     background-color: beige;
+//     padding: 0;
+//     text-align: center;
+//     position: relative;
+// }
 
-.file{
-    position: absolute;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-}
+// .file{
+//     position: absolute;
+//     opacity: 0;
+//     width: 100%;
+//     height: 100%;
+//     top: 0;
+//     left: 0;
+// }
 
-.list-of-files{
-    border: 2px lightskyblue solid;
-    border-radius: 10px;
-    background-color: beige;
-    height: 25rem;
-    width: 15rem;
-    overflow: scroll;
-    overflow-x: hidden;
-}
+// .list-of-files{
+//     border: 2px lightskyblue solid;
+//     border-radius: 10px;
+//     background-color: beige;
+//     height: 25rem;
+//     width: 15rem;
+//     overflow: scroll;
+//     overflow-x: hidden;
+// }
 
-.upload-text{
-    font: bold 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
-    line-height: 14px;
-    pointer-events: none;
-    position: absolute;
-    top:50%;
-    left:35%;
-}
+// .upload-text{
+//     font: bold 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+//     line-height: 14px;
+//     pointer-events: none;
+//     position: absolute;
+//     top:50%;
+//     left:35%;
+// }
 
 
-.hovered{
-    opacity: 0.5;
-    border: dashed 2px black;
-    height: 100%;
-    width: 100%;
-    margin: 0;
+// .hovered{
+//     opacity: 0.5;
+//     border: dashed 2px black;
+//     height: 100%;
+//     width: 100%;
+//     margin: 0;
 
-    & + .list-of-files{
-        pointer-events: none;
-        opacity: 0;
-        display: none;
-    }
+//     & + .list-of-files{
+//         pointer-events: none;
+//         opacity: 0;
+//         display: none;
+//     }
 
-    & .upload-text{
-        top:50%;
-        left: 45%;
-    }
+//     & .upload-text{
+//         top:50%;
+//         left: 45%;
+//     }
 
-}
+// }
 
-.file-list-button{
-    border-radius: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+// .file-list-button{
+//     border-radius: 10px;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
 
-    &:focus{
-        outline: 0;
-    }
-}
+//     &:focus{
+//         outline: 0;
+//     }
+// }
